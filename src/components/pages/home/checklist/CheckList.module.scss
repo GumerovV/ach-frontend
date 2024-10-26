@@ -1,0 +1,13 @@
+.checklist{
+  @apply space-y-3;
+
+  > .checklist_item {
+    @apply flex items-center space-x-5 font-inter text-2xl;
+
+    > .circle {
+      @apply rounded-full;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
