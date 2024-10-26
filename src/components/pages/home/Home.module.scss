@@ -1,0 +1,31 @@
+.wrapper {
+  display: grid;
+  grid-template-areas:
+          'stream check'
+          'stream check'
+          'progress events'
+          'violations events';
+  grid-gap: 40px;
+  grid-template-columns: 2fr 1fr;
+
+  div:nth-child(1) {
+   grid-area: stream;
+    align-self: start;
+  }
+
+  div:nth-child(2) {
+    grid-area: progress;
+  }
+
+  div:nth-child(3) {
+    grid-area: check;
+  }
+
+  div:nth-child(4) {
+    grid-area: events;
+  }
+
+  div:nth-child(5) {
+    grid-area: violations;
+  }
+}
