@@ -2,7 +2,6 @@
 
 #videos
 /public/*.mp4
-!/public/*
 
 # dependencies
 /node_modules
