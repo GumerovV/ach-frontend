@@ -1,11 +1,11 @@
 .events {
-  @apply space-y-3;
+  @apply max-h-[270px] max-w-[500px] grid grid-cols-4 overflow-y-auto overflow-x-auto;
 
-  > .event_item {
-    @apply flex font-inter;
-
-    > .event_content {
-      @apply w-full grid grid-cols-2;
-    }
+  button {
+    @apply text-primary hover:underline cursor-pointer transition-all duration-300;
   }
+}
+
+.event_content {
+  @apply text-start truncate mx-2 mb-5;
 }
