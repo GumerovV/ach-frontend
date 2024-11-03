@@ -6,6 +6,7 @@ const ProgressBar: FC<IProgressBarProps> = ({
 	currentTime,
 	videoTime,
 	handleRangeChange,
+	isStream,
 }) => {
 	const [hoverTime, setHoverTime] = useState<number | null>(null)
 	const [hoverPosition, setHoverPosition] = useState<number | null>(null)
@@ -55,7 +56,7 @@ const ProgressBar: FC<IProgressBarProps> = ({
 						</div>
 					)}
 				</div>
-				<button>В эфир</button>
+				{isStream && <button>В эфир</button>}
 			</div>
 		</div>
 	)

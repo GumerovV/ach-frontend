@@ -1,7 +1,6 @@
 import { IEvent } from '../../../../../types/event'
+import { IModal } from '../../../../../types/modal'
 
-export interface IEventDetailModal {
-	isOpen: boolean
-	onClose: () => void
+export interface IEventDetailModal extends IModal {
 	event: IEvent
 }

@@ -5,7 +5,10 @@ import classNames from 'classnames'
 import { IoPause, IoPlay } from 'react-icons/io5'
 import ProgressBar from './progress-bar/ProgressBar'
 
-const VideoPlayer: FC<{ videoPath: string }> = ({ videoPath }) => {
+const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
+	videoPath,
+	isStream = true,
+}) => {
 	const { videoRef, playerState, toggleVideo, fullscreen, handleRangeChange } =
 		usePlayer()
 
@@ -35,6 +38,7 @@ const VideoPlayer: FC<{ videoPath: string }> = ({ videoPath }) => {
 				videoTime={playerState.videoTime}
 				currentTime={playerState.currentTime}
 				handleRangeChange={handleRangeChange}
+				isStream={isStream}
 			/>
 		</>
 	)

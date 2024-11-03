@@ -7,18 +7,18 @@ import {
 } from '@headlessui/react'
 import { IEventDetailModal } from './event-detail-modal.interface'
 
+import styles from './EventDetailModal.module.scss'
+
 const EventDetailModal: FC<IEventDetailModal> = ({
 	isOpen,
 	onClose,
 	event,
 }) => {
 	return (
-		<Dialog onClose={onClose} open={isOpen} className='relative z-50 text-font'>
-			<div className='fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-50'>
-				<DialogPanel className='max-w-lg space-y-4 border bg-white p-12'>
-					<DialogTitle className='font-bold text-center'>
-						{event.name}
-					</DialogTitle>
+		<Dialog onClose={onClose} open={isOpen} className={styles.modal}>
+			<div className={styles.wrapper}>
+				<DialogPanel className={styles.modal_wrapper}>
+					<DialogTitle className={styles.title}>{event.name}</DialogTitle>
 					<Description>
 						<div>
 							<div>Дата: {event.date}</div>
