@@ -3,107 +3,26 @@ import Container from '../../../ui/container/Container'
 
 import styles from './Events.module.scss'
 import EventItem from './EventItem'
+import { useTypedSelector } from '../../../../hooks/useTypedSelector'
+import { getDate, getTime } from '../../../../utils/format-date'
 
 const Events: FC = () => {
+	const { events } = useTypedSelector(state => state.events)
+
 	return (
 		<Container title={'События'}>
 			<ul className={styles.events}>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 111111111111111111'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
-				<EventItem
-					date={'12/03/2024'}
-					time={'19:16:35'}
-					name={'Событие 1'}
-					id={1}
-				/>
+				{events
+					.slice()
+					.reverse()
+					.map(event => (
+						<EventItem
+							key={event.date}
+							date={getDate(event.date)}
+							time={getTime(event.date)}
+							name={event.name}
+						/>
+					))}
 			</ul>
 		</Container>
 	)
