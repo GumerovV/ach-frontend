@@ -12,17 +12,23 @@ const Events: FC = () => {
 	return (
 		<Container title={'События'}>
 			<ul className={styles.events}>
-				{events
-					.slice()
-					.reverse()
-					.map(event => (
-						<EventItem
-							key={event.date}
-							date={getDate(event.date)}
-							time={getTime(event.date)}
-							name={event.name}
-						/>
-					))}
+				{events.length ? (
+					events
+						.slice()
+						.reverse()
+						.map(event => (
+							<EventItem
+								key={event.date}
+								date={getDate(event.date)}
+								time={getTime(event.date)}
+								name={event.name}
+							/>
+						))
+				) : (
+					<li className='col-span-4 text-center text-gray-500'>
+						Пока нет актуальных событий...
+					</li>
+				)}
 			</ul>
 		</Container>
 	)

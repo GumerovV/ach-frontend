@@ -5,6 +5,7 @@ import {
 	setConnection,
 } from '../websocket/websocket.slice'
 import { addEvent } from '../event/event.slice'
+import { addItem } from '../checklist/checklist.slice'
 
 const websocketMiddleware = (url: string): Middleware => {
 	let socket: WebSocket | null = null
@@ -28,6 +29,10 @@ const websocketMiddleware = (url: string): Middleware => {
 					case 'event':
 						console.log('Received event', message)
 						store.dispatch(addEvent(message))
+						break
+					case 'checklist':
+						console.log('Received event', message)
+						store.dispatch(addItem(message))
 						break
 					default:
 						console.warn('Unknown event type:', message.type)

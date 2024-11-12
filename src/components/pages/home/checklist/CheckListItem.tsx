@@ -1,11 +1,9 @@
 import React, { FC } from 'react'
 import styles from './CheckList.module.scss'
 import classNames from 'classnames'
+import { IChecklist } from '../../../../types/checklist'
 
-const CheckListItem: FC<{
-	color: 'success' | 'error' | 'other'
-	text: string
-}> = ({ color, text }) => {
+const CheckListItem: FC<IChecklist> = ({ color, text }) => {
 	return (
 		<li className={styles.checklist_item}>
 			<div
