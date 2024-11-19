@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 const Home: FC = () => {
-	const { isConnected } = useTypedSelector(state => state.websocket)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -27,9 +26,6 @@ const Home: FC = () => {
 			<CheckList />
 			<Events />
 			<Violations />
-			<div className='text-font'>
-				{isConnected ? <p>True</p> : <p>False</p>}
-			</div>
 		</div>
 	)
 }
