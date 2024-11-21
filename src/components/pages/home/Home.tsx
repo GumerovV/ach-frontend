@@ -7,7 +7,6 @@ import styles from './Home.module.scss'
 import Violations from './violations/Violations'
 import { connect, disconnect } from '../../../store/websocket/websocket.slice'
 import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 const Home: FC = () => {
 	const dispatch = useDispatch()
