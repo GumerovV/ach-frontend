@@ -13,5 +13,5 @@ export const ToastrError = (error: any, title: string = 'Error') => {
 }
 
 export const ToasterSuccess = (title: string, message: string) => {
-	toastr.success(title, message, { removeOnHover: false })
+	toastr.success(title, message, { removeOnHover: true })
 }
