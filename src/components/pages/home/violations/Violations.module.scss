@@ -1,7 +1,5 @@
 .violations {
-  @apply w-[900px];
-  //@apply flex flex-row overflow-scroll;
-  //scroll-snap-type: x mandatory;
+  @apply max-w-[900px] w-full;
 
   .violation_item {
     @apply min-w-full flex items-center justify-between;
