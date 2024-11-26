@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import Container from '../../../ui/container/Container'
-
-import styles from './Violations.module.scss'
 import ViolationItem from './ViolationItem'
 import Carousel from '../../../ui/carousel/Carousel'
+
+import styles from './Violations.module.scss'
 
 const Violations: FC = () => {
 	return (
