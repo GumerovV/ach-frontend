@@ -23,7 +23,9 @@ const Carousel: FC<PropsWithChildren> = ({ children }) => {
 		<div className={styles.carousel}>
 			<div
 				className={styles.items}
-				style={{ transform: `translateX(-${curIndex * 100}%)` }}
+				style={{
+					transform: `translateX(calc(-${curIndex * 100}% - ${curIndex}*1rem))`,
+				}}
 			>
 				{children}
 			</div>
