@@ -1,0 +1,38 @@
+.carousel {
+  @apply relative overflow-hidden;
+
+  .items {
+    @apply flex transition-transform ease-in-out duration-300 gap-4;
+  }
+
+  .actions {
+    @apply w-full flex items-center justify-between p-4;
+
+    .dots {
+      @apply flex items-center justify-center text-black/10;
+
+      & .active {
+        @apply text-black/50;
+      }
+
+      svg {
+        @apply cursor-pointer hover:text-black/50 transition-all;
+        width: 32px;
+        height: 32px;
+
+        &:hover {
+          transform: scale(1.5); /* Увеличение размера при наведении */
+        }
+      }
+    }
+
+    & button {
+      @apply p-1 rounded-full bg-black/5 opacity-50 hover:opacity-100 transition-all;
+
+      & svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}

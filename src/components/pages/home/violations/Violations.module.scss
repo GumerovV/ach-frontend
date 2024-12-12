@@ -1,14 +1,14 @@
 .violations {
-  @apply space-y-3;
+  @apply w-[60vw];
 
   .violation_item {
-    @apply flex items-center justify-between;
+    @apply min-w-full flex items-center justify-between;
 
-    > .info {
+    & .info {
       @apply flex;
 
-      > .photo {
-        @apply block relative mr-7 cursor-pointer;
+      & .photo {
+        @apply relative h-full mr-7 cursor-pointer;
 
         span {
           @apply absolute z-10 text-white flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-all duration-300;
@@ -30,16 +30,16 @@
           @apply font-bold;
         }
 
-        > .violation_name {
+        & .violation_name {
           @apply p-[10px] bg-[#6E919F] text-white font-bold;
         }
       }
     }
 
-    > .actions {
+    & .actions {
       @apply flex flex-col space-y-2;
 
-      > button {
+      & button {
         @apply p-[10px] text-white text-xl font-medium;
       }
     }
