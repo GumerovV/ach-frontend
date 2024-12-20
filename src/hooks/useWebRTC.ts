@@ -1,78 +1,130 @@
 import { useCallback, useEffect, useRef } from 'react'
-// @ts-ignore
-import freeice from 'freeice'
-import socket from '../socket-client/socket'
-import ACTIONS from '../socket-client/actions'
 
 export default function useWebRTC() {
 	const peerConnection = useRef<RTCPeerConnection | null>(null)
 	const videoElement = useRef<HTMLVideoElement | null>(null)
+	const audioElement = useRef<HTMLAudioElement | null>(null)
 
-	useEffect(() => {
-		peerConnection.current = new RTCPeerConnection({
-			iceServers: freeice(),
-		})
+	const negotiate = useCallback((): void => {
+		if (!peerConnection.current) return
 
-		peerConnection.current.onicecandidate = event => {
-			if (event.candidate) {
-				socket.emit(ACTIONS.RELAY_ICE, {
-					peerID: 'server', // Статический ID для сервера
-					iceCandidate: event.candidate,
+		// Add transceivers for video and audio
+		peerConnection.current.addTransceiver('video', { direction: 'recvonly' })
+		peerConnection.current.addTransceiver('audio', { direction: 'recvonly' })
+
+		peerConnection.current
+			.createOffer()
+			.then(offer => peerConnection.current?.setLocalDescription(offer))
+			.then(() => {
+				// Wait for ICE gathering to complete
+				return new Promise<void>(resolve => {
+					if (peerConnection.current?.iceGatheringState === 'complete') {
+						resolve()
+					} else {
+						const checkState = () => {
+							if (peerConnection.current?.iceGatheringState === 'complete') {
+								peerConnection.current?.removeEventListener(
+									'icegatheringstatechange',
+									checkState,
+								)
+								resolve()
+							}
+						}
+						peerConnection.current?.addEventListener(
+							'icegatheringstatechange',
+							checkState,
+						)
+					}
 				})
-			}
-		}
-
-		peerConnection.current.ontrack = ({ streams: [remoteStream] }) => {
-			if (videoElement.current) {
-				videoElement.current.srcObject = remoteStream
-			}
-		}
-
-		async function createAndSendOffer() {
-			const offer = await peerConnection.current?.createOffer()
-			await peerConnection.current?.setLocalDescription(offer)
-
-			socket.emit(ACTIONS.RELAY_SDP, {
-				peerID: 'server',
-				sessionDescription: offer,
 			})
+			.then(() => {
+				const offer = peerConnection.current?.localDescription
+				if (!offer) throw new Error('Local description is not set.')
+
+				return fetch('/offer', {
+					body: JSON.stringify({
+						sdp: offer.sdp,
+						type: offer.type,
+					}),
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'POST',
+				})
+			})
+			.then(response => response.json())
+			.then(answer => {
+				if (peerConnection.current) {
+					peerConnection.current.setRemoteDescription(answer)
+				}
+			})
+			.then(() => {
+				// Adjust bitrate for video track
+				peerConnection.current?.getSenders().forEach(sender => {
+					if (sender.track?.kind === 'video') {
+						const params = sender.getParameters()
+						if (!params.encodings) {
+							params.encodings = [{}]
+						}
+						params.encodings[0].maxBitrate = 2500000 // 2.5 Mbps
+						sender.setParameters(params).catch(e => console.error(e))
+					}
+				})
+			})
+			.catch(e => console.error(e))
+	}, [])
+
+	const start = useCallback((): void => {
+		console.log('started connection to webRTC')
+		const config: RTCConfiguration = {
+			iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
 		}
 
-		createAndSendOffer()
+		peerConnection.current = new RTCPeerConnection(config)
 
-		socket.on(ACTIONS.SESSION_DESCRIPTION, async ({ sessionDescription }) => {
-			const remoteDesc = new RTCSessionDescription(sessionDescription)
-			await peerConnection.current?.setRemoteDescription(remoteDesc)
-
-			if (sessionDescription.type === 'offer') {
-				const answer = await peerConnection.current?.createAnswer()
-				await peerConnection.current?.setLocalDescription(answer)
-
-				socket.emit(ACTIONS.RELAY_SDP, {
-					peerID: 'server',
-					sessionDescription: answer,
-				})
+		// Connect audio and video tracks
+		peerConnection.current.addEventListener('track', (evt: RTCTrackEvent) => {
+			if (evt.track.kind === 'video') {
+				if (videoElement.current) {
+					videoElement.current.srcObject = evt.streams[0]
+				}
+			} else if (evt.track.kind === 'audio') {
+				if (audioElement.current) {
+					audioElement.current.srcObject = evt.streams[0]
+				}
 			}
 		})
 
-		socket.on(ACTIONS.ICE_CANDIDATE, ({ iceCandidate }) => {
-			peerConnection.current?.addIceCandidate(new RTCIceCandidate(iceCandidate))
-		})
+		negotiate()
+	}, [negotiate])
 
-		return () => {
-			peerConnection.current?.close()
+	const stop = useCallback((): void => {
+		if (peerConnection.current) {
+			peerConnection.current.close()
 			peerConnection.current = null
-
-			socket.off(ACTIONS.SESSION_DESCRIPTION)
-			socket.off(ACTIONS.ICE_CANDIDATE)
 		}
 	}, [])
 
-	const provideMediaRef = useCallback((node: HTMLVideoElement) => {
+	const provideVideoRef = useCallback((node: HTMLVideoElement | null): void => {
 		videoElement.current = node
 	}, [])
 
+	const provideAudioRef = useCallback((node: HTMLAudioElement | null): void => {
+		audioElement.current = node
+	}, [])
+
+	useEffect(() => {
+		return () => {
+			if (peerConnection.current) {
+				peerConnection.current.close()
+			}
+		}
+	}, [])
+
 	return {
-		provideMediaRef,
+		start,
+		stop,
+		provideVideoRef,
+		provideAudioRef,
 	}
 }

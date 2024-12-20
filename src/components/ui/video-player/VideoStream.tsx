@@ -10,17 +10,24 @@ const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
 }) => {
 	const { videoRef, playerState, toggleVideo, fullscreen, handleRangeChange } =
 		usePlayer()
-	const { provideMediaRef } = useWebRTC()
+	const { provideAudioRef, provideVideoRef, start, stop } = useWebRTC()
 
 	return (
 		<>
 			<div className={styles.wrapper}>
 				<video
-					ref={provideMediaRef}
+					ref={provideVideoRef}
 					autoPlay
 					playsInline={true}
 					className={styles.player}
 				/>
+				<audio autoPlay ref={provideAudioRef} />
+				<div className='absolute top-1 right-1'>
+					<div className='flex gap-4 text-font'>
+						<button onClick={start}>Start</button>
+						<button onClick={stop}>Stop</button>
+					</div>
+				</div>
 			</div>
 
 			<ProgressBar
