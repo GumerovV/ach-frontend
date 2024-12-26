@@ -1,6 +1,23 @@
 .checklist {
   @apply max-h-[250px] overflow-auto overflow-x-hidden space-y-3 mb-4;
 
+  @screen xl {
+    @apply max-h-[250px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+  }
+
+  @screen 2xl {
+    @apply max-h-[350px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+  }
+
+  @screen 3xl {
+    @apply max-h-[450px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+  }
+
+  @screen 4xl {
+    @apply max-h-none;
+  }
+
+
   > .checklist_item {
     @apply flex items-center space-x-5 font-inter text-2xl;
 

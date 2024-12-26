@@ -1,5 +1,5 @@
 .violations {
-  @apply w-[60vw];
+  @apply w-[60vw] 4xl:w-[65vw];
 
   .violation_item {
     @apply min-w-full flex items-center justify-between;
