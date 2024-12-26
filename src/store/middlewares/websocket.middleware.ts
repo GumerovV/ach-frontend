@@ -9,8 +9,7 @@ import { addEvent, changeEventUUID } from '../event/event.slice'
 import {
 	changeToSuccessStep,
 	resetChecklist,
-	updateErrorItem,
-	updateSuccessItem,
+	setStep,
 	updateToSuccessStep,
 } from '../checklist/checklist.slice'
 import {
@@ -68,15 +67,13 @@ const websocketMiddleware = (url: string): Middleware => {
 
 				switch (message.type) {
 					case 'event':
-						ToasterSuccess('Новое сообщение:', message.message)
-						store.dispatch(updateSuccessItem(message))
+						ToasterWarning('Новое сообщение:', message.message)
+						store.dispatch(setStep(message))
 						saveChecklist(store)
 						break
 					case 'violation':
 						ToastrError('Новое сообщение:', message.message)
-						store.dispatch(updateErrorItem(message))
 						store.dispatch(addViolation(message))
-						saveChecklist(store)
 						break
 					case 'logger':
 						store.dispatch(addEvent(message))
