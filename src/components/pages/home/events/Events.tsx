@@ -1,13 +1,21 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import Container from '../../../ui/container/Container'
 
 import styles from './Events.module.scss'
 import EventItem from './EventItem'
 import { useTypedSelector } from '../../../../hooks/useTypedSelector'
 import { getDate, getTime } from '../../../../utils/format-date'
+import { useActions } from '../../../../hooks/useActions'
 
 const Events: FC = () => {
-	const { events } = useTypedSelector(state => state.events)
+	const { events, event_uuid } = useTypedSelector(state => state.events)
+	const { getEvents } = useActions()
+
+	useEffect(() => {
+		if (event_uuid) {
+			getEvents(event_uuid)
+		}
+	}, [event_uuid])
 
 	return (
 		<Container title={'События'}>
@@ -18,10 +26,11 @@ const Events: FC = () => {
 						.reverse()
 						.map(event => (
 							<EventItem
-								key={event.date}
-								date={getDate(event.date)}
-								time={getTime(event.date)}
-								name={event.name}
+								key={event.datetime}
+								id={event.id}
+								datetime={getDate(event.datetime)}
+								time={getTime(event.datetime)}
+								step_name={event.step_name}
 							/>
 						))
 				) : (

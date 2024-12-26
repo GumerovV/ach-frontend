@@ -1,5 +1,5 @@
 export interface IBase {
-	id?: number
+	event_uuid?: string
 	createdAt?: Date
 	updatedAt?: Date
 }

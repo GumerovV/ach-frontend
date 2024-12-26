@@ -36,6 +36,7 @@ const Carousel: FC<PropsWithChildren> = ({ children }) => {
 				<div className={styles.dots}>
 					{Children.toArray(children).map((_, i) => (
 						<BsDot
+							key={i}
 							className={curIndex === i ? styles.active : ''}
 							onClick={() => setCurIndex(i)}
 						/>

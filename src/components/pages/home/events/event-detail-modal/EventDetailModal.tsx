@@ -18,12 +18,12 @@ const EventDetailModal: FC<IEventDetailModal> = ({
 		<Dialog onClose={onClose} open={isOpen} className={styles.modal}>
 			<div className={styles.wrapper}>
 				<DialogPanel className={styles.modal_wrapper}>
-					<DialogTitle className={styles.title}>{event.name}</DialogTitle>
+					<DialogTitle className={styles.title}>{event.step_name}</DialogTitle>
 					<Description>
 						<div>
-							<div>Дата: {event.date}</div>
+							<div>Дата: {event.datetime}</div>
 							<div>Время: {event.time}</div>
-							<div>Назвние: {event.name}</div>
+							<div>Назвние: {event.step_name}</div>
 							<div>Является отклонением: {event.isDeviation}</div>
 							<div>Тайм-код события: {event.eventTimeCode}</div>
 							<div>Ссылка на видео: {event.videoPath}</div>

@@ -18,8 +18,10 @@ const WebsocketSlice = createSlice({
 		disconnect: state => {
 			// Также не требует payload
 		},
+		sendMessage: (state, action: PayloadAction<any>) => {},
 	},
 })
 
-export const { setConnection, connect, disconnect } = WebsocketSlice.actions
+export const { setConnection, connect, disconnect, sendMessage } =
+	WebsocketSlice.actions
 export default WebsocketSlice.reducer
