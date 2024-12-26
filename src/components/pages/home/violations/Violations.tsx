@@ -30,7 +30,7 @@ const Violations: FC = () => {
 								date={'12/03/2024'}
 								time={'19:16:35'}
 								photoPath={''}
-								videoPath={''}
+								videoPath={violation.video_link || ''}
 							/>
 						))}
 					</Carousel>

@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
 import Container from '../../../ui/container/Container'
 import CheckListItem from './CheckListItem'
-
 import styles from './CheckList.module.scss'
 import { useTypedSelector } from '../../../../hooks/useTypedSelector'
 import { Field, Label, Switch } from '@headlessui/react'
 import { useActions } from '../../../../hooks/useActions'
 import { useDispatch } from 'react-redux'
 import { sendMessage } from '../../../../store/websocket/websocket.slice'
+import { v4 } from 'uuid'
 
 const CheckList: FC = () => {
 	const dispatch = useDispatch()
@@ -23,27 +23,27 @@ const CheckList: FC = () => {
 	}, [event_uuid])
 
 	const handleToggleGrounded = () => {
-		console.log('handleToggleGrounded')
 		setIsGrounded(!isGrounded)
-		dispatch(
-			sendMessage({
-				event_uuid,
-				step_id: checklist.find(el => el.step_index === 3)?.id,
-				grounding: !isGrounded,
-			}),
-		)
+		!isGrounded &&
+			dispatch(
+				sendMessage({
+					event_uuid,
+					step_id: v4(),
+					grounding: !isGrounded,
+				}),
+			)
 	}
 
 	const handleToggleGroundedAfter = () => {
-		console.log('handleToggleGroundedAfter')
 		setIsGroundedAfter(!isGroundedAfter)
-		dispatch(
-			sendMessage({
-				event_uuid,
-				step_id: checklist.find(el => el.step_index === 10)?.id,
-				grounding: !isGroundedAfter,
-			}),
-		)
+		!isGroundedAfter &&
+			dispatch(
+				sendMessage({
+					event_uuid,
+					step_id: v4(),
+					grounding: isGroundedAfter,
+				}),
+			)
 	}
 
 	return (

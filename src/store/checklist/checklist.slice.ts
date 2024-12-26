@@ -11,18 +11,24 @@ const ChecklistSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		setStep: (state, action: PayloadAction<IChecklistWebSocketDto>) => {
+			let flag = false
 			state.checklist = state.checklist.map(item => {
-				if (action.payload.status_bool) {
-					if (!item.id) {
-						item.id = action.payload.step_id
-						item.color = 'success'
-					}
-				} else {
-					if (!item.id) {
-						item.id = action.payload.step_id
-						item.color = 'error'
+				if (!flag) {
+					if (action.payload.status_bool) {
+						if (!item.id) {
+							item.id = action.payload.step_id
+							item.color = 'success'
+							flag = true
+						}
+					} else {
+						if (!item.id) {
+							item.id = action.payload.step_id
+							item.color = 'error'
+							flag = true
+						}
 					}
 				}
+
 				return item
 			})
 		},
