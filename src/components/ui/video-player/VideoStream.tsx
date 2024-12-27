@@ -1,16 +1,28 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { usePlayer } from './usePlayer'
 import styles from './VideoPlayer.module.scss'
 import ProgressBar from './progress-bar/ProgressBar'
 import useWebRTC from '../../../hooks/useWebRTC'
+import classNames from 'classnames'
+import { IoPause, IoPlay } from 'react-icons/io5'
 
-const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
+const VideoStream: FC<{ videoPath: string; isStream?: boolean }> = ({
 	videoPath,
 	isStream = true,
 }) => {
-	const { videoRef, playerState, toggleVideo, fullscreen, handleRangeChange } =
-		usePlayer()
+	const { playerState, handleRangeChange } = usePlayer()
 	const { provideAudioRef, provideVideoRef, start, stop } = useWebRTC()
+	const [isPlaying, setIsPlaying] = useState<boolean>(false)
+
+	const toggleStream = () => {
+		if (isPlaying) {
+			setIsPlaying(false)
+			stop()
+		} else {
+			setIsPlaying(true)
+			start()
+		}
+	}
 
 	return (
 		<>
@@ -20,13 +32,17 @@ const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
 					autoPlay
 					playsInline={true}
 					className={styles.player}
+					onClick={toggleStream}
 				/>
 				<audio autoPlay ref={provideAudioRef} />
-				<div className='absolute top-1 right-1'>
-					<div className='flex gap-4 text-font'>
-						<button onClick={start}>Start</button>
-						<button onClick={stop}>Stop</button>
-					</div>
+				<div
+					className={classNames(styles.controls, {
+						[styles.hide]: isPlaying,
+					})}
+				>
+					<button onClick={toggleStream}>
+						{isPlaying ? <IoPause /> : <IoPlay />}
+					</button>
 				</div>
 			</div>
 
@@ -40,4 +56,4 @@ const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
 	)
 }
 
-export default VideoPlayer
+export default VideoStream

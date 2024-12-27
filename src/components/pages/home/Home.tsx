@@ -7,9 +7,15 @@ import Violations from './violations/Violations'
 import { connect, disconnect } from '../../../store/websocket/websocket.slice'
 import { useDispatch } from 'react-redux'
 import VideoStream from '../../ui/video-player/VideoStream'
+import { useActions } from '../../../hooks/useActions'
 
 const Home: FC = () => {
 	const dispatch = useDispatch()
+	const { getEventUUID } = useActions()
+
+	useEffect(() => {
+		getEventUUID()
+	}, [])
 
 	useEffect(() => {
 		dispatch(connect())

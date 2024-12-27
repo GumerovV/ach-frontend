@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react'
+import { REACT_APP_WEBRTC_URL } from '../api/api.utils'
 
 export default function useWebRTC() {
+	const URL = REACT_APP_WEBRTC_URL
+
 	const peerConnection = useRef<RTCPeerConnection | null>(null)
 	const videoElement = useRef<HTMLVideoElement | null>(null)
 	const audioElement = useRef<HTMLAudioElement | null>(null)
@@ -41,7 +44,7 @@ export default function useWebRTC() {
 				const offer = peerConnection.current?.localDescription
 				if (!offer) throw new Error('Local description is not set.')
 
-				return fetch('/offer', {
+				return fetch(URL, {
 					body: JSON.stringify({
 						sdp: offer.sdp,
 						type: offer.type,
