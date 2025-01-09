@@ -19,12 +19,10 @@
 
 
   > .checklist_item {
-    @apply flex items-center space-x-5 font-inter text-2xl;
+    @apply flex items-center space-x-5 font-inter text-lg xl:text-2xl;
 
     > .circle {
-      @apply rounded-full;
-      width: 40px;
-      height: 40px;
+      @apply rounded-full w-[30px] h-[30px] xl:w-[40px] xl:h-[40px];
     }
   }
 }

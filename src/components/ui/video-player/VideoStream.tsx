@@ -28,6 +28,15 @@ const VideoStream: FC<{ videoPath: string; isStream?: boolean }> = ({
 		<>
 			<div className={styles.wrapper}>
 				<video
+					src={'/video5.mp4'}
+					ref={provideVideoRef}
+					autoPlay
+					playsInline={true}
+					className={styles.background}
+					onClick={toggleStream}
+				/>
+				<video
+					src={'/video5.mp4'}
 					ref={provideVideoRef}
 					autoPlay
 					playsInline={true}

@@ -18,14 +18,24 @@ const VideoPlayer: FC<{ videoPath: string; isStream?: boolean }> = ({
 		<>
 			<div className={styles.wrapper}>
 				{!videoError ? (
-					<video
-						src={videoPath}
-						ref={videoRef}
-						className={styles.player}
-						preload='metadata'
-						onClick={toggleVideo}
-						onError={() => setVideoError(!videoError)}
-					/>
+					<>
+						<video
+							src={videoPath}
+							ref={videoRef}
+							className={styles.background}
+							preload='metadata'
+							onClick={toggleVideo}
+							onError={() => setVideoError(!videoError)}
+						/>
+						<video
+							src={videoPath}
+							ref={videoRef}
+							className={styles.player}
+							preload='metadata'
+							onClick={toggleVideo}
+							onError={() => setVideoError(!videoError)}
+						/>
+					</>
 				) : (
 					<div className='text-font'>
 						<p>Видео обрабатывается. Попробуйте позже</p>
