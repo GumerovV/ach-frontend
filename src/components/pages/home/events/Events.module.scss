@@ -7,7 +7,7 @@
 }
 
 .event_content {
-  @apply text-start truncate mx-2 mb-5 text-sm xl:text-lg 2xl:text-xl;
+  @apply text-start truncate mx-2 mb-5 text-sm xl:text-lg;
 
   @screen 4xl {
     font-size: clamp(15px, 1.5vw, 30px);

@@ -34,9 +34,13 @@ const Events: FC = () => {
 							/>
 						))
 				) : (
-					<li className='col-span-4 text-center text-gray-500 4xl:text-2xl'>
-						Пока нет актуальных событий...
-					</li>
+					<EventItem
+						key={'event.datetime'}
+						id={1}
+						datetime={getDate('2003-04-12 04:05:06')}
+						time={getTime('2003-04-12 04:05:06')}
+						step_name={'event.step_name'}
+					/>
 				)}
 			</ul>
 		</Container>
