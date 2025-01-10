@@ -35,16 +35,9 @@ const Violations: FC = () => {
 						))}
 					</Carousel>
 				) : (
-					<ViolationItem
-						key={'violation.id'}
-						step_id={'violation.id'}
-						achName={'ACH-7'}
-						violationName={'violation.step_name'}
-						date={'12/03/2024'}
-						time={'19:16:35'}
-						photoPath={''}
-						videoPath={'/video5.mp4' || ''}
-					/>
+					<p className='col-span-4 p-4 text-center text-gray-500 4xl:text-2xl'>
+						Нарушения не зафиксированы
+					</p>
 				)}
 			</ul>
 		</Container>

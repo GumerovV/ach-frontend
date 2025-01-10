@@ -66,7 +66,7 @@ const CheckList: FC = () => {
 						)}
 					</ul>
 				</div>
-				<div className='w-full flex flex-col flex-grow-3 space-y-4 font-oswald text-xl'>
+				<div className='w-full flex flex-col flex-grow-3 space-y-4 font-oswald text-lg xl:text-xl'>
 					<Field
 						className='flex items-center justify-between'
 						onClick={handleToggleGrounded}

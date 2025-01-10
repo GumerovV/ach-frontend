@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { REACT_APP_WEBRTC_URL } from '../api/api.utils'
+import { toastr } from 'react-redux-toastr'
 
 export default function useWebRTC() {
 	const URL = REACT_APP_WEBRTC_URL
+
+	const [isPlaying, setIsPlaying] = useState<boolean>(false)
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const peerConnection = useRef<RTCPeerConnection | null>(null)
 	const videoElement = useRef<HTMLVideoElement | null>(null)
@@ -74,7 +78,12 @@ export default function useWebRTC() {
 					}
 				})
 			})
-			.catch(e => console.error(e))
+			.catch(e => {
+				console.log(e)
+				setIsLoading(false)
+				setIsPlaying(false)
+				toastr.error('Ошибка', 'Не удалось подключиться к трансляции')
+			})
 	}, [])
 
 	const start = useCallback((): void => {
@@ -98,6 +107,15 @@ export default function useWebRTC() {
 			}
 		})
 
+		peerConnection.current.addEventListener('connectionstatechange', () => {
+			if (peerConnection.current?.connectionState === 'connected') {
+				setIsPlaying(true)
+				setIsLoading(false)
+			}
+		})
+
+		setIsLoading(true)
+
 		negotiate()
 	}, [negotiate])
 
@@ -105,6 +123,8 @@ export default function useWebRTC() {
 		if (peerConnection.current) {
 			peerConnection.current.close()
 			peerConnection.current = null
+			setIsPlaying(false)
+			setIsLoading(false)
 		}
 	}, [])
 
@@ -129,5 +149,8 @@ export default function useWebRTC() {
 		stop,
 		provideVideoRef,
 		provideAudioRef,
+		isPlaying,
+		setIsPlaying,
+		isLoading,
 	}
 }

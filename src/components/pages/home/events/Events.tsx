@@ -34,7 +34,7 @@ const Events: FC = () => {
 							/>
 						))
 				) : (
-					<li className='col-span-4 text-center text-gray-500'>
+					<li className='col-span-4 text-center text-gray-500 4xl:text-2xl'>
 						Пока нет актуальных событий...
 					</li>
 				)}

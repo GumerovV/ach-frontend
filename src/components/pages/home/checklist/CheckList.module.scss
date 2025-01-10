@@ -1,16 +1,16 @@
 .checklist {
-  @apply max-h-[250px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+  @apply max-h-[15vw] overflow-auto overflow-x-hidden space-y-3 mb-4;
 
   @screen xl {
-    @apply max-h-[250px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+    @apply max-h-[20vw] overflow-auto overflow-x-hidden space-y-3 mb-4;
   }
 
   @screen 2xl {
-    @apply max-h-[350px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+    @apply max-h-[22vw] overflow-auto overflow-x-hidden space-y-3 mb-4;
   }
 
   @screen 3xl {
-    @apply max-h-[450px] overflow-auto overflow-x-hidden space-y-3 mb-4;
+    @apply max-h-[470px] overflow-auto overflow-x-hidden space-y-3 mb-4;
   }
 
   @screen 4xl {
@@ -19,10 +19,14 @@
 
 
   > .checklist_item {
-    @apply flex items-center space-x-5 font-inter text-lg xl:text-2xl;
+    @apply flex items-center space-x-5 font-inter text-[15px] lg:text-[15px] xl:text-2xl;
+
+    @screen 4xl {
+      font-size: clamp(32px, 1.5vw, 78px);
+    }
 
     > .circle {
-      @apply rounded-full w-[30px] h-[30px] xl:w-[40px] xl:h-[40px];
+      @apply rounded-full w-[30px] h-[30px] xl:w-[40px] xl:h-[40px] 4xl:w-[2vw] 4xl:h-[2vw];
     }
   }
 }

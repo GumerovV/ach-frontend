@@ -1,18 +1,27 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { usePlayer } from './usePlayer'
 import styles from './VideoPlayer.module.scss'
 import ProgressBar from './progress-bar/ProgressBar'
 import useWebRTC from '../../../hooks/useWebRTC'
 import classNames from 'classnames'
 import { IoPause, IoPlay } from 'react-icons/io5'
+import { BiLoader } from 'react-icons/bi'
 
 const VideoStream: FC<{ videoPath: string; isStream?: boolean }> = ({
 	videoPath,
 	isStream = true,
 }) => {
 	const { playerState, handleRangeChange } = usePlayer()
-	const { provideAudioRef, provideVideoRef, start, stop } = useWebRTC()
-	const [isPlaying, setIsPlaying] = useState<boolean>(false)
+	const {
+		provideAudioRef,
+		provideVideoRef,
+		start,
+		stop,
+		isPlaying,
+		setIsPlaying,
+		isLoading,
+	} = useWebRTC()
+	// const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
 	const toggleStream = () => {
 		if (isPlaying) {
@@ -28,15 +37,12 @@ const VideoStream: FC<{ videoPath: string; isStream?: boolean }> = ({
 		<>
 			<div className={styles.wrapper}>
 				<video
-					src={'/video5.mp4'}
 					ref={provideVideoRef}
 					autoPlay
 					playsInline={true}
 					className={styles.background}
-					onClick={toggleStream}
 				/>
 				<video
-					src={'/video5.mp4'}
 					ref={provideVideoRef}
 					autoPlay
 					playsInline={true}
@@ -53,6 +59,12 @@ const VideoStream: FC<{ videoPath: string; isStream?: boolean }> = ({
 						{isPlaying ? <IoPause /> : <IoPlay />}
 					</button>
 				</div>
+
+				{isLoading && (
+					<div className={styles.controls}>
+						<BiLoader className='animate-spin' />
+					</div>
+				)}
 			</div>
 
 			<ProgressBar
