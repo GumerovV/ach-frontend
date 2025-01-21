@@ -13,7 +13,7 @@ const Header: FC = () => {
 			</div>
 
 			<div className={styles.ach_switcher}>
-				<h2>ACH-7</h2>
+				<h2>ACH-3</h2>
 				<MdKeyboardArrowDown height={32} width={32} />
 			</div>
 

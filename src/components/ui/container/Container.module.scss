@@ -2,10 +2,14 @@
   @apply bg-white px-[25px] py-[20px] text-font;
 
   .wrapper {
-    @apply w-full;
+    @apply w-full h-full;
 
     & h2 {
-      @apply text-[32px] font-oswald font-medium;
+      @apply text-[25px] xl:text-[32px] 4xl:text-[48px] font-oswald font-medium;
+    }
+
+    .content_wrapper {
+      @apply w-full h-full;
     }
   }
 }

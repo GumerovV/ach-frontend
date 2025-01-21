@@ -1,5 +1,5 @@
 .events {
-  @apply max-h-[270px] max-w-[500px] grid grid-cols-4 overflow-y-auto overflow-x-auto;
+  @apply max-h-[314px] grid grid-cols-4 overflow-y-auto overflow-x-auto;
 
   button {
     @apply text-primary hover:underline cursor-pointer transition-all duration-300;
@@ -7,5 +7,9 @@
 }
 
 .event_content {
-  @apply text-start truncate mx-2 mb-5;
+  @apply text-start truncate mx-2 mb-5 text-sm xl:text-lg;
+
+  @screen 4xl {
+    font-size: clamp(15px, 1.5vw, 30px);
+  }
 }

@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import styles from './CheckList.module.scss'
 import classNames from 'classnames'
+import { IChecklist } from '../../../../types/checklist.type'
 
-const CheckListItem: FC<{
-	color: 'success' | 'error' | 'other'
-	text: string
-}> = ({ color, text }) => {
+type CheckListPropsType = Pick<IChecklist, 'step_name' | 'color'>
+
+const CheckListItem: FC<CheckListPropsType> = ({ color, step_name }) => {
 	return (
 		<li className={styles.checklist_item}>
 			<div
@@ -15,7 +15,7 @@ const CheckListItem: FC<{
 					'bg-other': color === 'other', // серый для other
 				})}
 			></div>
-			<p>{text}</p>
+			<p>{step_name}</p>
 		</li>
 	)
 }

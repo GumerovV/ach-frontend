@@ -3,14 +3,23 @@
   position: relative;
   aspect-ratio: 16/9;
 
+  .background {
+    @apply absolute top-0 left-0 w-full h-full object-cover;
+    filter: blur(20px) brightness(0.5);
+    z-index: 1;
+  }
+
   .player {
-    width: 100%;
-    object-fit: cover;
+    @apply relative z-10;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
   }
 
   .controls {
     @apply absolute text-xl w-20 h-20 flex items-center justify-center bg-primary opacity-90 transition-all duration-1000;
     border-radius: 50%;
+    z-index: 20;
 
     svg {
       width: 32px;
